@@ -22,6 +22,7 @@ router.post('/login', (req, res) => {
     Users.findBy({username}).first()
         .then(user => {
             if(user && bcrypt.compareSync(password, user.password)) {
+                req.session.user = user;
                 res.status(200).json({ message: `Welcome ${username}!` })
             } else {
                 res.status(401).json({ message: 'invalid creds' })
@@ -31,6 +32,20 @@ router.post('/login', (req, res) => {
             console.log(error);
             res.status(500).json(error);
         })
+});
+
+router.get('/logout', (req, res) => {
+    if (req.session) {
+        req.session.destroy(error => {
+            if (error) {
+                res.send('You cant log out for some reason')
+            } else {
+                res.send('goodbye.')
+            }
+        })
+    } else {
+        res.end();
+    }
 })
 
 module.exports = router;
