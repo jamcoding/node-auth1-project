@@ -6,7 +6,7 @@ module.exports = {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      filename: './data/auth.db3'
+      filename: './database/auth.db3',
     },
     pool: {
       afterCreate: (conn, done) => {
@@ -14,10 +14,10 @@ module.exports = {
       }
     },
     migrations: {
-      direcotry: './data/migrations'
+      directory: './database/migrations',
     },
     seeds: {
-      direcotry: './data/seeds'
+      directory: './database/seeds',
     }
   }
   
